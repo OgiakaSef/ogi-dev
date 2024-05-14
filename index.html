@@ -77,6 +77,19 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        .discord-button {
+            background-color: #8a2be2;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
         .arrow {
             font-size: 24px;
             vertical-align: middle;
@@ -119,6 +132,7 @@
             <p id="image-description">Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler.</p>
         </div>
         <button class="toggle-button" onclick="toggleImage()">Sistemleri Görmek İçin Tıkla<span class="arrow">&#9654;</span></button>
+        <button class="discord-button" onclick="redirectToDiscord()">Discord Sunucusuna Katıl</button>
     </div>
     <footer>
         &copy; 2024 Oğulcan Göker
@@ -142,6 +156,43 @@
                 imageContainer.style.display = "block";
             }
         }
+
+        var profilePic = document.querySelector(".profile-pic img");
+        profilePic.addEventListener("click", function() {
+            var profilePicSrc = this.src;
+            var enlargedImage = document.createElement("img");
+            enlargedImage.src = profilePicSrc;
+            enlargedImage.style.width = "100%";
+            enlargedImage.style.height = "auto";
+            enlargedImage.style.position = "fixed";
+            enlargedImage.style.top = "0";
+            enlargedImage.style.left = "0";
+            enlargedImage.style.right = "0";
+            enlargedImage.style.bottom = "0";
+            enlargedImage.style.margin = "auto";
+            enlargedImage.style.zIndex = "9999";
+            enlargedImage.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+            enlargedImage.style.cursor = "pointer";
+            enlargedImage.addEventListener("click", function() {
+                document.body.removeChild(enlargedImage);
+            });
+            document.body.appendChild(enlargedImage);
+        });
+
+        var discordButton = document.querySelector(".discord-button");
+        discordButton.addEventListener("click", function() {
+            var discordServerURL = "https://discord.com/";
+            window.location.href = discordServerURL;
+        });
+
+        var profilePicContainer = document.querySelector(".profile-pic");
+        profilePicContainer.addEventListener("mouseenter", function() {
+            profilePicContainer.style.borderColor = "#ff0000";
+        });
+
+        profilePicContainer.addEventListener("mouseleave", function() {
+            profilePicContainer.style.borderColor = "#fff"; 
+        });
     </script>
 </body>
 </html>
