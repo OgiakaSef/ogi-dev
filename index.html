@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://www.oyun.news/wp-content/uploads/metin2-seviye-para-kasma-taktikleri.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 200px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .about-me {
+            margin-top: 20px;
+        }
+        .system-image {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .system-image p {
+            margin-top: 10px;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .toggle-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .arrow {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile-pic">
+            <img src="https://media-ist1-1.cdn.whatsapp.net/v/t61.24694-24/312298070_181877914510531_4468180049665706642_n.jpg?ccb=11-4&oh=01_Q5AaINVFQO37v4p3fvNLSQmhEA030l9-U-SyskVMYK1M6ZCi&oe=6650DA7B&_nc_sid=e6ed6c&_nc_cat=107" alt="Profil Fotoğrafı">
+        </div>
+    </header>
+    <div class="container">
+        <div class="about-me">
+            <h2>Hakkımda</h2>
+            <ul>
+                <li>İletişim Bilgileri</li>
+                <ul>
+                    <li>Ankara / Turkey</li>
+                    <li>ogulcan.goker@std.ankaramedipol.edu.tr</li>
+                    <li><a href="https://github.com/OgiakaSef" target="_blank">https://github.com/OgiakaSef</a></li><br><br>
+                </ul>
+                <li>Eğitimlerim:</li>
+                <ul>
+                    <li>Karadağ Anadolu Lisesi</li>
+                    <li>Ostim Teknik Üniversitesi İç Mimarlık ve Çevre Tasarımı</li>
+                    <li>Ankara Medipol Üniversitesi Yönetim Bilişim Sistemleri</li><br><br>
+                </ul>
+                <li>İlgi Alanlarım:</li>
+                <ul>
+                    <li>Metin2</li>
+                    <li>Metin2 geliştirmek.</li>
+                    <li>Sistem düzenlemek.</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="system-image" id="image-container" style="display: none;">
+            <img src="https://i.hizliresim.com/zIgIo6.png" alt="Sistem Düzenleme Resmi" id="system-image">
+            <p id="image-description">Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler.</p>
+        </div>
+        <button class="toggle-button" onclick="toggleImage()">Sistemleri Görmek İçin Tıkla<span class="arrow">&#9654;</span></button>
+    </div>
+    <footer>
+        &copy; 2024 Oğulcan Göker
+    </footer>
+    <script>
+        var images = ["https://i.hizliresim.com/zIgIo6.png", "https://dosya.turkmmo.com/2022/11/128789_be82b941bb91cb9349b90ffcd0ffff13.png", "https://forum.turkmmo.com/attachments/76346/", "https://metin2.download/picture/8qB09ToRJvmr90A52wuHXmkm1Zln1yPC/.png", "https://www.mmotutkunlari.com/eklentiler/6djlvv-png.9137/", "https://i.hizliresim.com/zIgIo6.png"];
+        var descriptions = ["Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler.", "Boss takip sistemi sayesinde oyuncular bossların saatini öğrenebilirler!.", "Mob Drop Info sistemi sayesinde oyuncular yaratıklardan elde edeceği nesneleri görebilirler!", "BattlePass sistemi sayesinde oyuncular belirli görevleri yaparak ödüller kazanabilirler!", "K Inventory sistemi sayesinde oyuncular elde ettikleri itemleri daha az yer kaplayacak şekilde ek depolara yerleştirebilirler!", "Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler."];
+        var currentIndex = 0;
+        var image = document.getElementById("system-image");
+        var description = document.getElementById("image-description");
+
+        function toggleImage() {
+            var imageContainer = document.getElementById("image-container");
+            currentIndex = (currentIndex + 1) % images.length;
+            if (currentIndex === 0) {
+                imageContainer.style.display = "none";
+            }
+            image.src = images[currentIndex];
+            description.textContent = descriptions[currentIndex];
+            if (currentIndex !== 0) {
+                imageContainer.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
