@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Vantage Fetch Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,7 +65,7 @@
             bottom: 0;
             width: 100%;
         }
-        .toggle-button {
+        .toggle-button, .toggle-news-button {
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -94,6 +95,28 @@
             font-size: 24px;
             vertical-align: middle;
             margin-left: 10px;
+        }
+        #news-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #news-container h2 {
+            margin-top: 0;
+        }
+        .news-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            background-color: #eee;
         }
     </style>
 </head>
@@ -126,6 +149,9 @@
                     <li>Sistem düzenlemek.</li>
                 </ul>
             </ul>
+            <div id="news-container">
+                <h2>Son Haberler</h2>
+            </div>
         </div>
         <div class="system-image" id="image-container" style="display: none;">
             <img src="https://i.hizliresim.com/zIgIo6.png" alt="Sistem Düzenleme Resmi" id="system-image">
@@ -133,11 +159,28 @@
         </div>
         <button class="toggle-button" onclick="toggleImage()">Sistemleri Görmek İçin Tıkla<span class="arrow">&#9654;</span></button>
         <button class="discord-button" onclick="redirectToDiscord()">Discord Sunucusuna Katıl</button>
+        <button class="toggle-news-button" onclick="toggleNews()">Haberleri Görmek İçin Tıkla<span class="arrow">&#9654;</span></button>
     </div>
     <footer>
         &copy; 2024 Oğulcan Göker
     </footer>
     <script>
+        class AlphaVantage {
+            constructor(apiKey) {
+                this.apiKey = apiKey;
+            }
+
+            async getGlobalNews() {
+                try {
+                    const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${this.apiKey}`);
+                    const data = await response.json();
+                    return data.feed;
+                } catch (error) {
+                    console.error('Hata:', error);
+                }
+            }
+        }
+
         var images = ["https://i.hizliresim.com/zIgIo6.png", "https://dosya.turkmmo.com/2022/11/128789_be82b941bb91cb9349b90ffcd0ffff13.png", "https://forum.turkmmo.com/attachments/76346/", "https://metin2.download/picture/8qB09ToRJvmr90A52wuHXmkm1Zln1yPC/.png", "https://www.mmotutkunlari.com/eklentiler/6djlvv-png.9137/", "https://i.hizliresim.com/zIgIo6.png"];
         var descriptions = ["Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler.", "Boss takip sistemi sayesinde oyuncular bossların saatini öğrenebilirler!.", "Mob Drop Info sistemi sayesinde oyuncular yaratıklardan elde edeceği nesneleri görebilirler!", "BattlePass sistemi sayesinde oyuncular belirli görevleri yaparak ödüller kazanabilirler!", "K Inventory sistemi sayesinde oyuncular elde ettikleri itemleri daha az yer kaplayacak şekilde ek depolara yerleştirebilirler!", "Metin2 offlineshop sistemi oyunculara kendi aralarında ticaret yaptırarak piyasa oluşturmalarına yardımcı olmayı hedefler."];
         var currentIndex = 0;
@@ -193,6 +236,37 @@
         profilePicContainer.addEventListener("mouseleave", function() {
             profilePicContainer.style.borderColor = "#fff"; 
         });
+
+        const apiKey = 'YFFTSXX3XDKHVZJ8';
+        const alphaVantage = new AlphaVantage(apiKey);
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const newsContainer = document.getElementById('news-container');
+
+            const newsItems = await alphaVantage.getGlobalNews();
+            newsItems.forEach(news => {
+                const newsDiv = document.createElement('div');
+                newsDiv.classList.add('news-item');
+                newsDiv.innerHTML = `
+                    <h3>${news.title}</h3>
+                    <p>${news.summary}</p>
+                    <a href="${news.url}" target="_blank">Daha fazla oku</a>
+                `;
+                newsDiv.addEventListener("click", () => {
+                    window.open(news.url, "_blank");
+                });
+                newsContainer.appendChild(newsDiv);
+            });
+        });
+
+        function toggleNews() {
+            const newsContainer = document.getElementById('news-container');
+            if (newsContainer.style.display === 'none' || newsContainer.style.display === '') {
+                newsContainer.style.display = 'block';
+            } else {
+                newsContainer.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
