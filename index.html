@@ -107,6 +107,23 @@
             margin: 0;
             padding-bottom: 10px;
         }
+        .extra-image {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .extra-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .extra-image a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #4CAF50;
+            font-size: 16px;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -148,6 +165,10 @@
         <div class="stock-data" id="stock-data">
             <h2>Stock Data</h2>
             <p id="stock-info">Loading...</p>
+        </div>
+        <div class="extra-image">
+            <img src="https://i.hizliresim.com/3v5uyhp.png" alt="Extra Image">
+            <a href="https://www.investing.com/equities/ibm" target="_blank">Güncel Veriler İçin Tıkla!</a>
         </div>
     </div>
     <footer>
@@ -220,13 +241,7 @@
                 const url = `${this.baseUrl}function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${this.apiKey}`;
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
                     const data = await response.json();
-                    if (data.Note) {
-                        throw new Error("API limit reached. Please try again later.");
-                    }
                     return data;
                 } catch (error) {
                     console.error("Error fetching stock data:", error);
@@ -242,19 +257,14 @@
                     const latestTime = Object.keys(timeSeries)[0];
                     const latestData = timeSeries[latestTime];
                     stockInfo.textContent = `Symbol: ${symbol}, Time: ${latestTime}, Open: ${latestData["1. open"]}, Close: ${latestData["4. close"]}`;
-                } else if (data && data["Error Message"]) {
-                    stockInfo.textContent = "Invalid API call. Please check the symbol and try again.";
-                } else if (data && data.Note) {
-                    stockInfo.textContent = "API limit reached. Please try again later.";
                 } else {
-                    stockInfo.textContent = "Stock data not available.";
+                    stockInfo.textContent = "Stock data not available";
                 }
             }
         }
 
-        const alphaVantage = new AlphaVantage("5JPTVXR0168HS6OC");
+        const alphaVantage = new AlphaVantage("K0OK71EE5WIPC7BC");
         alphaVantage.displayStockData("IBM");
-
     </script>
 </body>
 </html>
