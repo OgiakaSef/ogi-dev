@@ -234,7 +234,7 @@
         class AlphaVantage {
             constructor(apiKey) {
                 this.apiKey = apiKey;
-                this.baseUrl = "https://www.alphavantage.co/query?";
+                this.baseUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=5min&apikey=K0OK71EE5WIPC7BC";
             }
 
             async fetchStockData(symbol) {
